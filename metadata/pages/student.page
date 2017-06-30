@@ -1,0 +1,75 @@
+<apex:page controller="Student" showHeader="true" sidebar="true" id="thePage"  >
+ <style>
+     .th { font-weight: bold; }
+ </style>
+    
+    <apex:pageBlock title="Library Loan">
+       
+     </apex:pageBlock>   
+ 	 
+    
+      <apex:form id="Search">
+      
+      <apex:pageBlock id="student" rendered="{!showStudent}">
+      <apex:pageBlockSection title="Student Search" collapsible="false" id="studentSearch" columns="1">
+          <apex:outputPanel layout="searchBlock" style="padding:5px 0px;margin-bottom:5px;background-color:#D9D9D9"> 
+                <apex:outputLabel style="padding:0px 5px;font-size:95%;font-weight:bold;font-family: 'Verdana','Geneva',sans-serif;" value="Search" for="searchText"/>                                         
+                <apex:inputText id="searchText" value="{!searchText}" size="50"/>
+                <apex:commandButton value="Search" action="{!doSearch}" rerender="results" status="status"/>
+                <apex:actionStatus id="status" startText="requesting..."/>
+          </apex:outputPanel>  
+          <apex:pageMessages rendered="{!showMessageTop}"/>
+      </apex:pageBlockSection>
+          
+       <apex:pageBlockSection title="Student Search Results" id="results" columns="1" collapsible="false" >
+              <apex:pageBlockTable value="{!results}" var="student" id="thePBTable" >               
+                  <apex:column headerValue="Action"> 
+                 	<apex:commandButton action="{!getLoanedBooks}" reRender="Search" value="Select">
+      				  	<apex:param name="a" assignTo="{!studentId}" value="{!student.id}"/>
+                        <apex:param name="b" assignTo="{!studentName}" value="{!student.name}"/>
+      		  	  	</apex:commandButton>
+                  </apex:column>             
+                  <apex:column headerValue="Student Name">                   
+                      <apex:outputText value="{!student.name}"/>
+                  </apex:column>                   
+              </apex:pageBlockTable>          
+      </apex:pageBlockSection>
+      </apex:pageBlock>
+          
+      <apex:pageBlock id="Loans" rendered="{!showLoan}">
+        <apex:commandButton action="{!returnSearch}" reRender="Search" value="Return to Search">
+      	</apex:commandButton>
+        <br/>
+        <apex:pageBlockSection title="Student Loans" collapsible="false" id="LoanList" columns="1">
+
+      	<apex:outputText value="Student: {!studentName}"/>
+          <br/>
+            <apex:pageMessages rendered="{!showMessageMiddle}"/>
+  			<apex:pageBlockTable value="{!Loans}" var="Loan" id="loanTable" >               
+                  <apex:column headerValue="Return"> 
+                    <apex:commandButton action="{!returnBook}" reRender="Loans" value="Return">
+                        <apex:param name="LoanedBookId" assignTo="{!loanedBookId}" value="{!Loan.id}"/>
+      		  	  	</apex:commandButton>
+                  </apex:column>             
+                  <apex:column headerValue="Book Tittle">                   
+                      <apex:outputText value="{!Loan.Book_Title__c}"/>
+                  </apex:column> 
+                  <apex:column headerValue="Expected Return Day">                   
+                      <apex:outputText value="{!Loan.Expected_Return_Day__c}"/>
+                  </apex:column>           
+              </apex:pageBlockTable>     
+      
+          </apex:pageBlockSection>
+          <apex:outputPanel layout="searchBlock" id="bookCopySearch" rendered="{!showBookLoan}"> 
+                <apex:outputLabel style="padding:0px 5px;font-size:95%;font-weight:bold;font-family: 'Verdana','Geneva',sans-serif;" value="Book's copy code" for="searchCopy"/>                                         
+                <apex:inputText id="searchCopy" value="{!searchCopy}" size="50"/>
+                <apex:commandButton value="Lend" action="{!doSearchCopy}" rerender="LoanList" status="status"/>
+                <apex:actionStatus id="status" startText="requesting..."/>
+          <apex:pageMessages rendered="{!showMessageBottom}"/>
+          </apex:outputPanel> 
+
+      </apex:pageBlock>
+      </apex:form>
+
+
+</apex:page>

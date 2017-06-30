@@ -1,0 +1,4 @@
+<apex:page controller="BookSearch" >
+    <apex:pageBlock title="Library Loan">
+    </apex:pageBlock>
+</apex:page>

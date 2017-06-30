@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Loan_Email</fullName>
+        <description>Loan_Email</description>
+        <protected>false</protected>
+        <recipients>
+            <field>student__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/LoanEmail</template>
+    </alerts>
+    <alerts>
+        <fullName>send_email_after_return_day</fullName>
+        <description>send email after return day</description>
+        <protected>false</protected>
+        <recipients>
+            <field>student__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Loan_24_after</template>
+    </alerts>
+    <alerts>
+        <fullName>send_email_before_return_day</fullName>
+        <description>send email before return day</description>
+        <protected>false</protected>
+        <recipients>
+            <field>student__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>unfiled$public/Loan_24_before</template>
+    </alerts>
+    <rules>
+        <fullName>SendLoanEmail</fullName>
+        <actions>
+            <name>Loan_Email</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <formula>TRUE</formula>
+        <triggerType>onCreateOnly</triggerType>
+        <workflowTimeTriggers>
+            <actions>
+                <name>send_email_before_return_day</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Loan__c.Expected_Return_Day__c</offsetFromField>
+            <timeLength>-1</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+        <workflowTimeTriggers>
+            <actions>
+                <name>send_email_after_return_day</name>
+                <type>Alert</type>
+            </actions>
+            <offsetFromField>Loan__c.Expected_Return_Day__c</offsetFromField>
+            <timeLength>1</timeLength>
+            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
+        </workflowTimeTriggers>
+    </rules>
+    <rules>
+        <fullName>Student Is owner</fullName>
+        <active>false</active>
+        <formula>OwnerId &lt;&gt; student__r.Id</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+</Workflow>

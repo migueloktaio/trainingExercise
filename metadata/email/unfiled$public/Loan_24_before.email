@@ -1,0 +1,5 @@
+Dear {!Loan__c.student__c},
+This is a reminder that you have until tomorrow to return the following book: {!Loan__c.Book_Title__c}.
+
+Kind Regards,
+You University Library Staff

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Verbiage for email to be sent to student 24hs before the expected return date</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Loan 24 before</name>
+    <style>none</style>
+    <subject>Reminder to return Book</subject>
+    <type>text</type>
+</EmailTemplate>

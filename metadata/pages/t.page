@@ -1,0 +1,39 @@
+<apex:page controller="t">
+<apex:form >
+<apex:pageBlock >
+
+    <apex:pageBlockSection >
+    <apex:actionFunction name="RenderSection" action="{!RenderSec}"/>
+        <apex:selectList multiselect="false" size="1" onChange="RenderSection() ;" value="{!SelectedVal}">
+
+            <apex:selectOption itemLabel="--None--" itemValue=""/>
+
+            <apex:selectOptions value="{!myList}"/>
+
+        </apex:selectList>
+   
+   <apex:pageBlockSection rendered="{!showAccount}">
+
+        <apex:outputLabel value="This Section will show account fields"/>
+
+    </apex:pageBlockSection>
+
+ 
+
+    <apex:pageBlockSection rendered="{!showContact}">
+
+        <apex:outputLabel value="This section will show contact fields"/>
+
+    </apex:pageBlockSection>
+
+    </apex:pageBlockSection>
+
+ 
+
+
+ 
+
+  </apex:pageBlock>
+</apex:form>
+
+</apex:page>
